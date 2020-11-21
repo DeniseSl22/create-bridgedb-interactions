@@ -24,13 +24,14 @@ BridgeDb License -> http://www.bridgedb.org/browser/trunk/LICENSE-2.0.txt
 Run the script and test the results
 -----------------------------------
 
+1. Update the [createDerby.groovy file](https://github.com/bridgedb/create-bridgedb-hmdb/blob/master/createDerby.groovy) with latest metadata, e.g. ("DATASOURCEVERSION" field) and change the version of the Rhea database in [this line](https://github.com/DeniseSl22/create-bridgedb-interactions/blob/main/createDerby.groovy#L50).
+
 1. add the jars to your classpath, e.g. on Linux with:
 
   export CLASSPATH=\`ls -1 *.jar | tr '\n' ':'\`
 
-2. download Rhea tsv mapping file
-
-2.1 ID mappings
+3. download Rhea tsv mapping file
+- ID mappings
 
 Use the below curl command line operations.
 
@@ -40,7 +41,7 @@ Use the below curl command line operations.
   
   ```
 
-4. Update the [createDerby.groovy file](https://github.com/bridgedb/create-bridgedb-hmdb/blob/master/createDerby.groovy#L61) with the new version numbers ("DATASOURCEVERSION" field) and run the script with Groovy: #Update line
+4. Run the script with Groovy:
 
   ```
   export CLASSPATH=`ls -1 *.jar | tr '\n' ':'`
