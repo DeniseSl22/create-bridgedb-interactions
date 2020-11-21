@@ -9,9 +9,9 @@ The script uses Rhea [3] for each new version release (~monthly), and is based o
 Releases
 --------
 
-The files are released via the BridgeDb Website: #Fix link: http://www.bridgedb.org/mapping-databases/hmdb-metabolite-mappings/
+The files are released via the BridgeDb Website: https://bridgedb.github.io/data/gene_database/
 
-The mapping files are also archived on Figshare: #Fix link: https://figshare.com/search?q=metabolite+bridgedb+mapping+database&quick=1
+The mapping files are also archived on Figshare: https://figshare.com/projects/BridgeDb_interactions/37805
 
 License
 -------
