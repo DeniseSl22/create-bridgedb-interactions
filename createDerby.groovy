@@ -38,7 +38,7 @@ reactomereact = DataSource.register ("Re", "Reactome").asDataSource()
 metacycDS = DataSource.register ("Mc", "MetaCyc").asDataSource() //Not recognised as BioDataSource
 ecocycDS = DataSource.register ("Eco", "EcoCyc").asDataSource() //Not recognised as BioDataSource
 macieDS = DataSource.register ("Ma", "MACiE").asDataSource() //Not recognised as BioDataSource
-unipathDS = DataSource.register ("Up", "Unipathway").asDataSource() //Not recognised as BioDataSource
+//unipathDS = DataSource.register ("Up", "Unipathway").asDataSource() //Not recognised as BioDataSource, Not part of Rhea download (any more?)
 
 String dateStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
 database.setInfo("BUILDDATE", dateStr);
@@ -119,17 +119,17 @@ new File("data/mappingsrhea.tsv").eachLine { line,number ->
     }
 
 	  // add external identifiers
-	  addXRef(database, ref, databaseid, enzymenom, genesDone, linksDone);	
+	  addXRef(database, ref, databaseid, enzymenom, genesDone, linksDone);	//Updated database name (enzymenom)
 
 	  counter++
 	  if (counter % commitInterval == 0) {
-      	    println "Info: errors: " + error + " (EC Nomenclature)"
+      	    println "Info: errors: " + error + " (EC Nomenclature)" //Updated database error output (EC Nomenclature)
      	    database.commit()
 	}
   }
 
  //Rhea-KEGG 
-	if(databasename == "KEGG_REACTION" ) {  //Only use the 4th column for EC mappings if it contains "EC".
+	if(databasename == "KEGG_REACTION" ) {  //Only use the 4th column for Kegg mappings if it contains "KEGG_REACTION".
 	  Xref ref = new Xref(rootid, rheaDS);
 	  if (!genesDone.contains(ref.toString())) {
 	    addError = database.addGene(ref);
@@ -142,17 +142,17 @@ new File("data/mappingsrhea.tsv").eachLine { line,number ->
     }
 
 	  // add external identifiers
-	  addXRef(database, ref, databaseid, keggreact, genesDone, linksDone);	
+	  addXRef(database, ref, databaseid, keggreact, genesDone, linksDone);	//Updated database name (keggreact)
 
 	  counter++
 	  if (counter % commitInterval == 0) {
-      	    println "Info: errors: " + error + " (KEGG Reactions)"
+      	    println "Info: errors: " + error + " (KEGG Reactions)" //Updated database error output (KEGG Reactions)
      	    database.commit()
 	}
   }
 
  //Rhea-MetaCyC
-	if(databasename == "METACYC" ) {  //Only use the 4th column for EC mappings if it contains "EC".
+	if(databasename == "METACYC" ) {  //Only use the 4th column for MetaCyc mappings if it contains "METACYC".
 	  Xref ref = new Xref(rootid, rheaDS);
 	  if (!genesDone.contains(ref.toString())) {
 	    addError = database.addGene(ref);
@@ -165,11 +165,80 @@ new File("data/mappingsrhea.tsv").eachLine { line,number ->
     }
 
 	  // add external identifiers
-	  addXRef(database, ref, databaseid, metacycDS, genesDone, linksDone);	
+	  addXRef(database, ref, databaseid, metacycDS, genesDone, linksDone);	//Updated database name (metacycDS)
 
 	  counter++
 	  if (counter % commitInterval == 0) {
-      	    println "Info: errors: " + error + " (MetaCyc)"
+      	    println "Info: errors: " + error + " (MetaCyc)" //Updated database error output (MetaCyc)
+     	    database.commit()
+	}
+  }
+
+ //Rhea-EcoCyC
+	if(databasename == "ECOCYC" ) {  //Only use the 4th column for EcoCyc mappings if it contains "ECOCYC".
+	  Xref ref = new Xref(rootid, rheaDS);
+	  if (!genesDone.contains(ref.toString())) {
+	    addError = database.addGene(ref);
+	    if (addError != 0) println "Error (addGene): " + database.recentException().getMessage()
+	      error += addError
+	      linkError = database.addLink(ref,ref);
+	    if (linkError != 0) println "Error (addLinkItself): " + database.recentException().getMessage()
+	      error += linkError
+	      genesDone.add(ref.toString())
+    }
+
+	  // add external identifiers
+	  addXRef(database, ref, databaseid, ecocycDS, genesDone, linksDone);	 //Updated database name (ecocycDS)
+
+	  counter++
+	  if (counter % commitInterval == 0) {
+      	    println "Info: errors: " + error + " (EcoCyc)" //Updated database error output (EcoCyc)
+     	    database.commit()
+	}
+  }
+
+ //Rhea-MaCIE
+	if(databasename == "MACIE" ) {  //Only use the 4th column for MaCIE mappings if it contains "MACIE".
+	  Xref ref = new Xref(rootid, rheaDS);
+	  if (!genesDone.contains(ref.toString())) {
+	    addError = database.addGene(ref);
+	    if (addError != 0) println "Error (addGene): " + database.recentException().getMessage()
+	      error += addError
+	      linkError = database.addLink(ref,ref);
+	    if (linkError != 0) println "Error (addLinkItself): " + database.recentException().getMessage()
+	      error += linkError
+	      genesDone.add(ref.toString())
+    }
+
+	  // add external identifiers
+	  addXRef(database, ref, databaseid, macieDS, genesDone, linksDone);	 //Updated database name (macieDS)
+
+	  counter++
+	  if (counter % commitInterval == 0) {
+      	    println "Info: errors: " + error + " (MaCIE)" //Updated database error output (MaCIE)
+     	    database.commit()
+	}
+  }
+
+ //Rhea-Reactome
+	if(databasename == "REACTOME" ) {  //Only use the 4th column for Reactome mappings if it contains "REACTOME".
+	  Xref ref = new Xref(rootid, rheaDS);
+	  if (!genesDone.contains(ref.toString())) {
+	    addError = database.addGene(ref);
+	    if (addError != 0) println "Error (addGene): " + database.recentException().getMessage()
+	      error += addError
+	      linkError = database.addLink(ref,ref);
+	    if (linkError != 0) println "Error (addLinkItself): " + database.recentException().getMessage()
+	      error += linkError
+	      genesDone.add(ref.toString())
+    }
+
+	  // add external identifiers
+	  addXRef(database, ref, databaseid, reactomereact, genesDone, linksDone);	 //Updated database name (reactomereact)
+
+	  counter++
+	  if (counter % commitInterval == 0) {
+      	    println "Info: errors: " + error + " (Reactome Reactions)" //Updated database error output (Reactome interactions)
      	    database.commit()
 	}
   }
